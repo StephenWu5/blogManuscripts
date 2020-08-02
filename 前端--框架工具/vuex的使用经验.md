@@ -1,5 +1,7 @@
 # vuex使用经验
 
+#### 前言
+
 因为在项目中使用vuex的关系，最近重新在慕课网上学习了这个课程。对它的了解又进一步。
 
 vuex就是一个状态管理的仓库，只要是vue项目的同一个页面的所有组件，都可以对这个仓库进行的状态进行存储，修改或者读取。不是同一个页面的话，可以通过浏览器的cookie，localStorage，sessionStorage进行桥连，就是在切换路由的时候，判断localStorage，或者sessionStorage是否存有值，有的话，就拿里面的值给vuex里面对应的State名；每次存Vuex里面的值时，记得给localStorage存一份。当然在这里不是每一个State的值都要备份到Storage里面去。需要桥连多个页面的那些State才需要，这样子可以写少代码量。
