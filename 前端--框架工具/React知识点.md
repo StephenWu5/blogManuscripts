@@ -36,7 +36,14 @@ class Son extends React.Component{
 
         this.timerTick = this.timerTick.bind(this) //这里绑定this是为了让该方法指向实例，否则的话this为undefined了，这是js上下文的内容，不是React的锅。
         this.increase = this.increase.bind(this) //这里绑定this是为了让该方法指向实例
-    }
+    },
+
+    //验证组件的属性
+    //同时支持自定义验证函数
+    //写一个返回Error对象函数
+    propTypes: {
+        propertyName: React.PropTypes.number.isRequired,
+    },
 
     timerTick(){    //自定义方法1，比起Vue的话，不用写在methods对象里面，自由度高。
         this.setState({
@@ -176,23 +183,23 @@ React生命周期其实分3个部分：挂载阶段，更新阶段，卸载阶�
 
 组件更新的调节是
 
-一、父组件更新；二、该组件调用 setState 方法后，该组件会更新；三、如果组件写shouldComponentUpdate ，看返回值是否为true。
+一、父组件更新引起子组件的更新；二、该组件调用 setState 方法后，该组件会更新；三、如果组件写shouldComponentUpdate ，看返回值是否为true。
 
 以State变化为例：
 
 state变化了，开始是shouldComponentupdate，开发者可以在这里写一些条件判断，满足条件就返回true；否则为false，false不往下走。
 
-接着是componentwillUpdate，做一些界面更新前的事情；
+接着是componentwillUpdate，这个函数自带两个参数：下一个属性对象和下一个状态对象：nextProps，nextState，做一些界面更新前的事情；
 
 之后是render，创建虚拟Dom树，更新界面Dom。
 
-最后是componentDidUpdate，作一些界面更新后的操纵。不能使用setState。
+最后是componentDidUpdate，这个函数自带两个参数：上一个属性对象和上一个状态对象: prevProps和prevState,作一些界面更新后的操纵。不能使用setState。记住哈，不作死就不会死。
 
 ###### 三、卸载阶段
 
 当组件要被从界面上移除的时候调用。比如调用ReactDOM.unmountComponentAtNode(destination)移除时。
 
-componentWillUnmount，这里生命周期可以做可做些组件相关的清理工作，例如取消计时器、网络请求，取消一些绑定事件等；同样不能调用setSate()
+componentWillUnmount，这里生命周期可以做可做些组件相关的清理工作，例如取消计时器、网络请求，取消一些绑定事件等；同样不能调用setSate()。
 
 //todo 粘贴那两个流程图
 
@@ -253,10 +260,23 @@ this.props.history.push('/child02')
 
 #### computed和watch
 
-要实现 vue 的 computed，很简单，useMemo 属性即可
+要实现 vue 的 computed，很简单，
+写一个方法return 即可
+或者使用useMemo。
 
 1、computed
 ```javascript
+//方式1
+//无论是count还是val变化，都会导致getNum重新计算
+<div mock=getNum()>{}</div>
+<div>{getNum()}</div>
+
+getNum(){
+    return this.state.a + this.state.b;
+}
+```
+```javascript
+//方式2
 //useMemo,useCallback
 import React, { memo, useMemo, useCallback, useState } from 'react';
 
@@ -268,6 +288,8 @@ const App = memo(() => {
   return (
     <div>
       <button onClick={()=>{setCount((count) => count + 1)}}>count+1</button>
+      <div mock=mock()>{}</div>
+      <div>{mock()}</div>
     </div>
   )
 })
@@ -276,12 +298,18 @@ export default App;
 
 2、watch
 
-在componentDidUpdate里面做对比
-```javascript
-componentDidUpdate（prevProps, prevstate if（prevstate. namel！==this state. name1）t this setstate（t name2. this. state, name1
-}）
+在shouldComponentUpdate里面做对比；
 
+```javascript
+shouldComponentUpdate(prevProps,prevState){
+if(prevState namell=sthis state. name1)
+this setstate({
+name2：this state. name1
+})
+}
 ```
+
+
 或者state 定义一个getter ,setter在里面做这个事。
 
 
