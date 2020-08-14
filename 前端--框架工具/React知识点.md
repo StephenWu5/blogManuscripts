@@ -302,14 +302,15 @@ export default App;
 
 ```javascript
 shouldComponentUpdate(prevProps,prevState){
-if(prevState namell=sthis state. name1)
+if(prevState.namel=this.state.name1)
 this setstate({
 name2：this state. name1
 })
 }
 ```
 
-
 或者state 定义一个getter ,setter在里面做这个事。
 
+#### 插槽
 
+插槽可以使用this.props.children，if判断是否渲染，满足条件后渲染。
