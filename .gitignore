@@ -87,6 +87,8 @@ yarn-error.log*
 *.swp
 *.*~
 *~
+#xlsx
+.~*
 
 #压缩包
 # *.zip
@@ -95,4 +97,3 @@ yarn-error.log*
 
 cloudpaybm.zip
 cloudpaycm.zip
-
