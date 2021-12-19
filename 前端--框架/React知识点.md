@@ -25,7 +25,7 @@ React的一些概念：Vue比 React容易，因为 Vue 提供了很多模板语�
 ```javascript
 import React from 'react'
 
-class Son extends React.Component{
+class Son extends React.PureComponent{
     constructor(props) { //构造函数，初始化props和state的值
         super(props);
 
